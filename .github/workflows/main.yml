@@ -26,7 +26,7 @@ jobs:
     
     - name: Build with PyInstaller
       run: |
-        pyinstaller --name SteamModManager --onefile --noconsole --icon=icon.ico main.py
+        pyinstaller --name SteamModManager --onefile --noconsole main.py
     
     - name: Create Release
       id: create_release
@@ -45,6 +45,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/SteamModManager.exe
-        asset_name: SteamModManager.exe
+        asset_path: ./dist/Oni-ChanMV.exe
+        asset_name: Oni-ChanMV.exe
         asset_content_type: application/octet-stream
