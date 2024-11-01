@@ -9,6 +9,7 @@ on:
 jobs:
   release:
     runs-on: windows-latest
+    permissions: write-all    # 権限を追加
     
     steps:
     - uses: actions/checkout@v2
@@ -26,23 +27,23 @@ jobs:
     
     - name: Build with PyInstaller
       run: |
-        pyinstaller --name SteamModManager --onefile --noconsole main.py
+        pyinstaller --name Oni-ChanMV --onefile --noconsole main.py
     
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PAT }}    # PATを使用
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: ${{ github.ref_name }}    # タグ名の参照方法を修正
+        release_name: Release ${{ github.ref_name }}
         draft: false
         prerelease: false
     
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PAT }}    # PATを使用
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./dist/Oni-ChanMV.exe
